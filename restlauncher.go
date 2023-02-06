@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -197,7 +196,7 @@ func printHeader(res *http.Response) {
 }
 
 func printBody(res *http.Response) {
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Print(err)
 		os.Exit(1)
