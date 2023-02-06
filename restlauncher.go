@@ -45,6 +45,7 @@ var root = &cli.Command{
 type argGet struct {
 	Url    string            `cli:"*u,url" usage:"Url to get"`
 	Header map[string]string `cli:"H" usage:"header option"`
+	Times  uint64            `cli:"n" usage:"Number of call of the command" dft:"1"`
 }
 
 var get = &cli.Command{
@@ -53,11 +54,14 @@ var get = &cli.Command{
 	Argv: func() interface{} { return new(argGet) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argGet)
-		res := call("GET", argv.Url, nil, argv.Header)
-		printStatus(res)
-		printHeader(res)
-		fmt.Println()
-		printBody(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("GET", argv.Url, nil, argv.Header)
+			printStatus(res)
+			printHeader(res)
+			fmt.Println()
+			printBody(res)
+		}
 		return nil
 	},
 }
@@ -66,6 +70,7 @@ type argPost struct {
 	Url     string            `cli:"*u,url" usage:"Url to get"`
 	Header  map[string]string `cli:"H" usage:"header option"`
 	Content string            `cli:"*c,content" usage:"Post content"`
+	Times   uint64            `cli:"n" usage:"Number of call of the command" dft:"1"`
 }
 
 var post = &cli.Command{
@@ -74,11 +79,14 @@ var post = &cli.Command{
 	Argv: func() interface{} { return new(argPost) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argPost)
-		res := call("POST", argv.Url, strings.NewReader(argv.Content), argv.Header)
-		printStatus(res)
-		printHeader(res)
-		fmt.Println()
-		printBody(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("POST", argv.Url, strings.NewReader(argv.Content), argv.Header)
+			printStatus(res)
+			printHeader(res)
+			fmt.Println()
+			printBody(res)
+		}
 		return nil
 	},
 }
@@ -89,10 +97,12 @@ var header = &cli.Command{
 	Argv: func() interface{} { return new(argGet) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argGet)
-
-		res := call("HEAD", argv.Url, nil, argv.Header)
-		printStatus(res)
-		printHeader(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("HEAD", argv.Url, nil, argv.Header)
+			printStatus(res)
+			printHeader(res)
+		}
 		return nil
 	},
 }
@@ -103,11 +113,14 @@ var put = &cli.Command{
 	Argv: func() interface{} { return new(argPost) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argPost)
-		res := call("PUT", argv.Url, strings.NewReader(argv.Content), argv.Header)
-		printStatus(res)
-		printHeader(res)
-		fmt.Println()
-		printBody(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("PUT", argv.Url, strings.NewReader(argv.Content), argv.Header)
+			printStatus(res)
+			printHeader(res)
+			fmt.Println()
+			printBody(res)
+		}
 		return nil
 	},
 }
@@ -116,6 +129,7 @@ type argDelete struct {
 	Url     string            `cli:"*u,url" usage:"Url to get"`
 	Header  map[string]string `cli:"H" usage:"header option"`
 	Content string            `cli:"c,content" usage:"Post content"`
+	Times   uint64            `cli:"n" usage:"Number of call of the command" dft:"1"`
 }
 
 var delete = &cli.Command{
@@ -128,11 +142,14 @@ var delete = &cli.Command{
 		if len(argv.Content) != 0 {
 			content = strings.NewReader(argv.Content)
 		}
-		res := call("DELETE", argv.Url, content, argv.Header)
-		printStatus(res)
-		printHeader(res)
-		fmt.Println()
-		printBody(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("DELETE", argv.Url, content, argv.Header)
+			printStatus(res)
+			printHeader(res)
+			fmt.Println()
+			printBody(res)
+		}
 		return nil
 	},
 }
@@ -143,10 +160,12 @@ var option = &cli.Command{
 	Argv: func() interface{} { return new(argGet) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argGet)
-
-		res := call("OPTIONS", argv.Url, nil, argv.Header)
-		printStatus(res)
-		printHeader(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("OPTIONS", argv.Url, nil, argv.Header)
+			printStatus(res)
+			printHeader(res)
+		}
 		return nil
 	},
 }
@@ -157,11 +176,14 @@ var patch = &cli.Command{
 	Argv: func() interface{} { return new(argPost) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argPost)
-		res := call("PATCH", argv.Url, strings.NewReader(argv.Content), argv.Header)
-		printStatus(res)
-		printHeader(res)
-		fmt.Println()
-		printBody(res)
+		var index uint64 = 0
+		for ; index < argv.Times; index++ {
+			res := call("PATCH", argv.Url, strings.NewReader(argv.Content), argv.Header)
+			printStatus(res)
+			printHeader(res)
+			fmt.Println()
+			printBody(res)
+		}
 		return nil
 	},
 }
