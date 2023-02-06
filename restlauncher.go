@@ -53,7 +53,7 @@ var get = &cli.Command{
 	Argv: func() interface{} { return new(argGet) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*argGet)
-		res := call("Get", argv.Url, nil, argv.Header)
+		res := call("GET", argv.Url, nil, argv.Header)
 		printStatus(res)
 		printHeader(res)
 		fmt.Println()
